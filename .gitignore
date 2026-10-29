@@ -1,0 +1,56 @@
+# ===== Unity: carpetas que Unity genera solo (no se suben) =====
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Mm]emoryCaptures/
+/[Rr]ecordings/
+
+# Asset Store tools
+/[Aa]ssets/AssetStoreTools*
+
+# Copias temporales de Unity al reimportar
+/[Aa]ssets/[Ss]treamingAssets/aa/*
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+sysinfo.txt
+crashlytics-build.properties
+
+# ===== Archivos de Visual Studio / Rider (se regeneran solos) =====
+.vs/
+.vscode/
+.idea/
+.gradle/
+ExportedObj/
+.consulo/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# ===== Builds empaquetados =====
+*.apk
+*.aab
+*.unitypackage
+*.app
+
+# ===== Sistema operativo =====
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# NOTA: el build de WebGL para GitHub Pages NO se ignora si lo guardas en /docs

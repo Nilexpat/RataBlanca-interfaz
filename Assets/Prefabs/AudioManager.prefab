@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1792728243933878452
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4763900712926143673}
+  - component: {fileID: 6568032445673262557}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4763900712926143673
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1792728243933878452}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6568032445673262557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1792728243933878452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 864651c815d551e4b92d626d6025462a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RataBlanca.Audio.AudioManager
+  hoverClip: {fileID: 0}
+  clickClip: {fileID: 0}
+  expandClip: {fileID: 0}
+  collapseClip: {fileID: 0}
+  ambientClip: {fileID: 0}
+  hoverVolume: 0.5
+  clickVolume: 0.9
+  expandVolume: 0.9
+  collapseVolume: 0.9
+  ambientVolume: 0.6
+  mixer: {fileID: 0}
+  generalParameter: VolGeneral
+  feedbackParameter: VolFeedback
+  ambientParameter: VolAmbiente
+  feedbackGroupName: Feedback
+  ambientGroupName: Ambiente
+  defaultGeneral: 0.8
+  defaultFeedback: 0.8
+  defaultAmbient: 0.6
+  hoverCooldown: 0.06

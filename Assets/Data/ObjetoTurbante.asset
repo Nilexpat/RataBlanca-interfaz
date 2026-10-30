@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f02adf180b14533479eeae5596887fee, type: 3}
+  m_Name: ObjetoTurbante
+  m_EditorClassIdentifier: Assembly-CSharp::RataBlanca.Objeto.ExplodedViewData
+  clothCallouts:
+  - text: "Tela de hilo\nconductivo"
+    start: {x: 845, y: 1100}
+    end: {x: 642, y: 1143}
+    labelSide: 0
+    labelWidth: 380
+  - text: "Tela de microceldas\nde litio"
+    start: {x: 845, y: 1205}
+    end: {x: 747, y: 1160}
+    labelSide: 0
+    labelWidth: 380
+  - text: Tela aislante
+    start: {x: 845, y: 1310}
+    end: {x: 672, y: 1231}
+    labelSide: 0
+    labelWidth: 380
+  rubyCallouts:
+  - text: "micro ship ESP 224\ncon panel solar"
+    start: {x: 1345, y: 1298}
+    end: {x: 1318, y: 1122}
+    labelSide: 2
+    labelWidth: 420
+  arrowColor: {r: 0.2509804, g: 0.07058824, b: 0.07058824, a: 1}
+  arrowThickness: 4
+  arrowHeadLength: 22
+  arrowHeadWidth: 20
+  textColor: {r: 0.2509804, g: 0.07058824, b: 0.07058824, a: 1}
+  textSize: 32
+  labelGap: 12
+  magnifierLineStart: {x: 985, y: 672}
+  magnifierLineEnd: {x: 1246, y: 961}
+  magnifierLineColor: {r: 0.42745098, g: 0.28235295, b: 0.28235295, a: 1}
+  magnifierLineThickness: 3
+  dashLength: 16
+  dashGap: 10
+  showRing: 1
+  ringCenter: {x: 901, y: 579}
+  ringDiameter: 260
+  clothGlowColor: {r: 1, g: 0.8235294, b: 0.24705882, a: 1}
+  rubyGlowColor: {r: 1, g: 0.8235294, b: 0.24705882, a: 1}
+  glowMin: 0.25
+  glowMax: 0.9
+  glowHover: 1
+  glowWhenOpen: 0.15
+  pulseSpeed: 0.8
+  hoverResponse: 10
+  appearDuration: 0.5
+  appearStartScale: 0.6
+  magnifierLineDuration: 0.35
+  arrowDuration: 0.4
+  arrowStagger: 0.12
+  textFadeDuration: 0.3
+  closeSpeed: 1.8

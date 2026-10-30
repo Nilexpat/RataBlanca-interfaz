@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0425b2367ddab442927c60ab934babb, type: 3}
+  m_Name: 3_DistribucionDelTiempo
+  m_EditorClassIdentifier: Assembly-CSharp::RataBlanca.Graficos.ChartData
+  type: 1
+  title: Promedio de Como las Ratas Distribuyen su Tiempo
+  icon: {fileID: 0}
+  entries:
+  - label: Dormir
+    value: 8
+    color: {r: 1, g: 0.5568628, b: 0.52156866, a: 1}
+  - label: Comer
+    value: 1.5
+    color: {r: 0.30980393, g: 0.023529412, b: 0.023529412, a: 1}
+  - label: Trabajar
+    value: 8
+    color: {r: 1, g: 0.32941177, b: 0.3019608, a: 1}
+  - label: Ocio
+    value: 3
+    color: {r: 0.60784316, g: 0.1764706, b: 0.16078432, a: 1}
+  - label: Hobbies
+    value: 4
+    color: {r: 1, g: 0.09019608, b: 0, a: 1}
+  series: []
+  xAxisLabel: 
+  yAxisLabel: Horas
+  yMax: 0
+  yStep: 0
+  xMin: 0
+  xMax: 10
+  xStep: 1
+  axisColor: {r: 0.4745098, g: 0.16862746, b: 0.16862746, a: 1}
+  valueSuffix: 
+  showValues: 1
+  showLegend: 0
+  innerRadius: 0.46
+  startAngle: 0
+  sliceGap: 4
+  pieLabels: 0
+  minLabelAngle: 9
+  duration: 1.2
+  curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  stagger: 0.12
+  bodyHeight: 360

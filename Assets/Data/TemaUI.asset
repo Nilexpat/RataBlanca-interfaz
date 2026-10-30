@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f7b68ccd58cf444bb119147ceb83f31, type: 3}
+  m_Name: TemaUI
+  m_EditorClassIdentifier: Assembly-CSharp::RataBlanca.Core.UITheme
+  titleFont: {fileID: 0}
+  bodyFont: {fileID: 0}
+  chartFont: {fileID: 0}
+  background: {r: 1, g: 1, b: 1, a: 1}
+  titleText: {r: 0, g: 0, b: 0, a: 1}
+  darkText: {r: 0.15686275, g: 0.15686275, b: 0.15686275, a: 1}
+  menuPlay: {r: 0.38039216, g: 0.06666667, b: 0.06666667, a: 1}
+  menuItem: {r: 0.42745098, g: 0.28235295, b: 0.28235295, a: 1}
+  menuItemActive: {r: 0.2509804, g: 0.07058824, b: 0.07058824, a: 1}
+  sidebarGlass: {r: 0.32941177, g: 0.32941177, b: 0.32941177, a: 0.32941177}
+  panelGray: {r: 0.8509804, g: 0.8509804, b: 0.8509804, a: 1}
+  blockHeader: {r: 0.8784314, g: 0.8784314, b: 0.8784314, a: 1}
+  blockBorder: {r: 0.34117648, g: 0.34117648, b: 0.34117648, a: 1}
+  accentRed: {r: 0.8862745, g: 0.39215687, b: 0.39215687, a: 1}
+  fade: {r: 0.078431375, g: 0.0627451, b: 0.0627451, a: 1}

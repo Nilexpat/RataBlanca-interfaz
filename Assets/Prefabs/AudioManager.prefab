@@ -45,13 +45,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RataBlanca.Audio.AudioManager
   hoverClip: {fileID: 0}
-  clickClip: {fileID: 0}
-  expandClip: {fileID: 0}
-  collapseClip: {fileID: 0}
+  clickClip: {fileID: 8300000, guid: d742ea5007ed6f045b87f53900ed0c05, type: 3}
+  expandClip: {fileID: 8300000, guid: 8ed5951e3f608714296fae6fd75e32e9, type: 3}
+  collapseClip: {fileID: 8300000, guid: d742ea5007ed6f045b87f53900ed0c05, type: 3}
   ambientClip: {fileID: 0}
   hoverVolume: 0.5
   clickVolume: 0.9
-  expandVolume: 0.9
+  expandVolume: 0.512
   collapseVolume: 0.9
   ambientVolume: 0.6
   mixer: {fileID: 0}

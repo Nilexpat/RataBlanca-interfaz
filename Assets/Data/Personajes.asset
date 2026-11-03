@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 319ee6da57be83a4f821cefbcd762089, type: 3}
+  m_Name: Personajes
+  m_EditorClassIdentifier: Assembly-CSharp::RataBlanca.Personajes.CharacterRoster
+  characters:
+  - name: Rata Blanca
+    portrait: {fileID: 21300000, guid: 963cfe043d4a44d418f5690b3fc4b1c1, type: 3}
+    description: "Una rata de laboratorio de pelaje blanco impecable y mirada inquieta.
+      Empez\xF3 siendo un rom\xE1ntico sin remedio: dram\xE1tico, so\xF1ador, capaz
+      de hacer un poema de cualquier gesto de Antonella. Cree que los dioses son
+      seres divinos y que todo lo que pasa en Rat City tiene un sentido. Pero despu\xE9s
+      de esa noche y de un experimento del que nadie habla, algo cambi\xF3 en \xE9l.
+      Ahora es fr\xEDo, sarc\xE1stico y desconfiado, y solo lo mueve una idea: a
+      Antonella no la mat\xF3 la naturaleza, alguien la envenen\xF3."
+  - name: Antonella
+    portrait: {fileID: 21300000, guid: d16290cf0d117674b80f09d7d9173656, type: 3}
+    description: "Una rata procreadora, dise\xF1ada para dar vida, de una belleza
+      que hac\xEDa que hasta los dioses la trataran con cuidado. Detr\xE1s de esa
+      delicadeza hab\xEDa una inteligencia poco com\xFAn, pero no le alcanz\xF3 para
+      sobrevivir a Rat City. Nunca sinti\xF3 nada por Rata Blanca. Aun as\xED, desde
+      el m\xE1s all\xE1 quiz\xE1s le est\xE9 agradecida por todo lo que \xE9l sigue
+      haciendo por ella, sin que ella est\xE9 ah\xED para verlo."
+  - name: El Gordo John
+    portrait: {fileID: 21300000, guid: 8b579b63f910f5a4088bdbdda08b7fb8, type: 3}
+    description: "Una rata enorme, de pelaje manchado y con calvas, que huele a orines
+      y tose m\xE1s de lo que habla. No se para de su silla en la taberna m\xE1s
+      sucia de Rat City. Es c\xEDnico, desafiante y no le debe nada a nadie, menos
+      a Antonella, a quien nunca soport\xF3. Antes fue el arquitecto m\xE1s brillante
+      de la ciudad y crey\xF3 que los dioses castigaban a los traidores. Hoy solo
+      cree en la cerveza y en no hacer preguntas. Dicen que es el \xFAnico que nunca
+      dej\xF3 de ir a la taberna."
+  - name: Madame White
+    portrait: {fileID: 21300000, guid: 3a7f7c46085f3af4d8ae56f0bb6d81d6, type: 3}
+    description: "Una dama de la alta sociedad de Rat City, elegante y de modales
+      impecables, que nunca se quita su turbante. Dice escuchar a los dioses y habla
+      como si ya hubiera le\xEDdo el final de todas las historias. Sus consejos suenan
+      a adorno hasta que se cumplen. Cree que el destino ya est\xE1 escrito y que
+      solo unos pocos pueden leerlo. Lo que nadie sabe es cu\xE1nto le est\xE1 costando
+      ese don: con el tiempo, el turbante le ha ido quitando la cabeza."
+  portraitScale: 1.15
+  slideDistance: 140
+  outDuration: 0.18
+  inDuration: 0.4
+  idleBobSpeed: 1.1
+  idleBobHeight: 6

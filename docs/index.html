@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes">
+    <title>Rata Blanca</title>
+    <style>
+      /* Plantilla de Rata Blanca: el juego ocupa toda la ventana del navegador */
+      html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #141010; }
+      #unity-canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; display: block; background: #141010; }
+      #carga { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+               gap: 22px; color: #f2eded; font-family: "Courier New", monospace; letter-spacing: 0.3em; transition: opacity 0.6s ease; }
+      #carga h1 { margin: 0; font-size: clamp(28px, 6vw, 64px); font-weight: 400; }
+      #barra { width: min(60vw, 420px); height: 6px; background: #3a2b2b; overflow: hidden; }
+      #relleno { width: 0%; height: 100%; background: #e26464; transition: width 0.2s ease; }
+      #estado { font-size: 13px; letter-spacing: 0.2em; color: #b89a9a; }
+      #aviso { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); padding: 10px 16px; display: none;
+               background: #4f0606; color: #fff; font-family: sans-serif; font-size: 14px; }
+    </style>
+  </head>
+  <body>
+    <canvas id="unity-canvas" tabindex="-1"></canvas>
+    <div id="carga">
+      <h1>RATA BLANCA</h1>
+      <div id="barra"><div id="relleno"></div></div>
+      <div id="estado">CARGANDO BITÁCORA… 0%</div>
+    </div>
+    <div id="aviso"></div>
+    <script>
+      var canvas = document.querySelector("#unity-canvas");
+      var carga = document.querySelector("#carga");
+      var relleno = document.querySelector("#relleno");
+      var estado = document.querySelector("#estado");
+
+      function mostrarAviso(msg, type) {
+        if (type !== "error") { console.warn(msg); return; }
+        var aviso = document.querySelector("#aviso");
+        aviso.textContent = msg;
+        aviso.style.display = "block";
+      }
+
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/docs.loader.js";
+      var config = {
+        arguments: [],
+        dataUrl: buildUrl + "/docs.data.unityweb",
+        frameworkUrl: buildUrl + "/docs.framework.js.unityweb",
+        codeUrl: buildUrl + "/docs.wasm.unityweb",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "Rata Blanca",
+        productVersion: "0.1.0",
+        showBanner: mostrarAviso,
+      };
+
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = function () {
+        createUnityInstance(canvas, config, function (progress) {
+          var p = Math.round(progress * 100);
+          relleno.style.width = p + "%";
+          estado.textContent = "CARGANDO BITÁCORA… " + p + "%";
+        }).then(function () {
+          carga.style.opacity = "0";
+          setTimeout(function () { carga.style.display = "none"; }, 650);
+          canvas.focus();
+        }).catch(function (message) {
+          mostrarAviso(message, "error");
+        });
+      };
+      document.body.appendChild(script);
+    </script>
+  </body>
+</html>

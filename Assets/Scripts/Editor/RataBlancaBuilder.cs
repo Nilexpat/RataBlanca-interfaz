@@ -4,6 +4,8 @@ using System.IO;
 using RataBlanca.Audio;
 using RataBlanca.Core;
 using RataBlanca.Graficos;
+using RataBlanca.Mapa;
+using RataBlanca.Personajes;
 using RataBlanca.Objeto;
 using RataBlanca.UI;
 using TMPro;
@@ -43,6 +45,9 @@ namespace RataBlanca.EditorTools
         const string ObjectDataPath = DataFolder + "/ObjetoTurbante.asset";
         const string ChartSpritesFolder = SpritesFolder + "/Graficos";
         const string ChartsFolder = DataFolder + "/Graficos";
+        const string MapDataPath = DataFolder + "/MapaRatCity.asset";
+        const string RosterPath = DataFolder + "/Personajes.asset";
+        const string CharactersFolder = ImagesFolder + "/Personajes";
         const float BlockWidth = 584f;
 
         // Composición del turbante (Referencias/Exposion.png): 1849×1407.
@@ -139,6 +144,57 @@ namespace RataBlanca.EditorTools
         }
 
         // ==================================================================
+        // Publicar en GitHub Pages
+        // ==================================================================
+        const string PagesFolder = "docs";
+
+        [MenuItem("Rata Blanca/Publicar: compilar WebGL en docs (GitHub Pages)", priority = 40)]
+        public static void BuildForGitHubPages()
+        {
+            if (!BuildPipeline.IsBuildTargetSupported(BuildTargetGroup.WebGL, BuildTarget.WebGL))
+            {
+                EditorUtility.DisplayDialog("Rata Blanca",
+                    "Falta el módulo \"Web Build Support\" de Unity.\n\n" +
+                    "Ábrelo en Unity Hub > Installs > (tu versión) > Add modules > Web Build Support, " +
+                    "instálalo, reinicia Unity y vuelve a usar esta opción.", "Entendido");
+                return;
+            }
+            if (!File.Exists(MenuScenePath) || !File.Exists(GameScenePath))
+            {
+                EditorUtility.DisplayDialog("Rata Blanca", "Primero usa Rata Blanca > Construir todo.", "OK");
+                return;
+            }
+            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+
+            ConfigureWebGL();
+            var options = new BuildPlayerOptions
+            {
+                scenes = new[] { MenuScenePath, GameScenePath },
+                locationPathName = PagesFolder,
+                target = BuildTarget.WebGL,
+                targetGroup = BuildTargetGroup.WebGL,
+                options = BuildOptions.None
+            };
+            var report = BuildPipeline.BuildPlayer(options);
+            if (report.summary.result != UnityEditor.Build.Reporting.BuildResult.Succeeded)
+            {
+                EditorUtility.DisplayDialog("Rata Blanca — error",
+                    "La compilación no terminó (" + report.summary.result + "). Revisa la consola y mándale una captura a Claude.", "OK");
+                return;
+            }
+
+            // Sin esto, GitHub Pages podría ignorar algunos archivos.
+            File.WriteAllText(Path.Combine(PagesFolder, ".nojekyll"), "");
+            EditorUtility.DisplayDialog("Rata Blanca",
+                "Listo: el juego quedó en la carpeta docs/ del proyecto (" +
+                (report.summary.totalSize / (1024f * 1024f)).ToString("0.0") + " MB).\n\n" +
+                "1. En GitHub Desktop haz commit y Push.\n" +
+                "2. En GitHub: Settings > Pages > Deploy from a branch > main / docs > Save.\n" +
+                "3. En un par de minutos queda en https://<tu-usuario>.github.io/<repositorio>/", "OK");
+            EditorUtility.RevealInFinder(PagesFolder);
+        }
+
+        // ==================================================================
         // Configuración del proyecto
         // ==================================================================
         static void ConfigureWebGL()
@@ -147,6 +203,8 @@ namespace RataBlanca.EditorTools
             // "Decompression Fallback" el navegador descomprime por su cuenta.
             PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat.Gzip;
             PlayerSettings.WebGL.decompressionFallback = true;
+            // Plantilla propia (Assets/WebGLTemplates/RataBlanca): pantalla completa y carga con la paleta.
+            PlayerSettings.WebGL.template = "PROJECT:RataBlanca";
             PlayerSettings.productName = "Rata Blanca";
             PlayerSettings.defaultWebScreenWidth = (int)RefWidth;
             PlayerSettings.defaultWebScreenHeight = (int)RefHeight;
@@ -399,9 +457,9 @@ namespace RataBlanca.EditorTools
             // Secciones
             var sections = new List<Section>
             {
-                PlaceholderSection(content, SectionId.Mapa, "Mapa", "El mapa de Rat City llegará pronto."),
+                BuildMapSection(content),
                 BuildMisteriosSection(content),
-                PlaceholderSection(content, SectionId.Personajes, "Personajes", "Aquí irá el carrusel de personajes."),
+                BuildCharactersSection(content),
                 BuildObjectSection(content),
                 SettingsSection(content)
             };
@@ -554,6 +612,137 @@ namespace RataBlanca.EditorTools
             var valueRt = TopLeft(MakeRect("Valor", row), 670f, 0f, 90f, 56f);
             valueText = MakeText(valueRt, "80 %", BodyFont, 26f, _theme.menuItem, TextAlignmentOptions.MidlineRight);
             return slider;
+        }
+
+        // ==================================================================
+        // Sección Mapa: Rat City / Bio-jaula (Imagenes/RatCity.png)
+        // ==================================================================
+        static Section BuildMapSection(RectTransform content)
+        {
+            var data = LoadOrCreate<MapData>(MapDataPath);
+
+            var rt = Stretch(MakeRect("Seccion" + SectionId.Mapa, content));
+            MakeGroup(rt.gameObject);
+            var section = rt.gameObject.AddComponent<MapSection>();
+            section.id = SectionId.Mapa;
+            section.data = data;
+
+            var stage = Stretch(MakeRect("Escenario", rt), 40f, 40f, 150f, 60f);
+            var comp = Center(MakeRect("Composicion", stage), 0f, 0f, data.size.x, data.size.y);
+            comp.gameObject.AddComponent<FitToParent>().designSize = data.size;
+
+            section.composition = comp;
+            section.labelFont = BodyFont;
+            section.cardTitleFont = _theme.chartFont != null ? _theme.chartFont : TitleFont;
+            section.cardBodyFont = BodyFont;
+
+            var titleRt = TopLeft(MakeRect("Titulo", rt), 72f, 56f, 700f, 70f);
+            MakeText(titleRt, "Mapa", TitleFont, 48f, _theme.darkText, TextAlignmentOptions.MidlineLeft);
+            var subRt = TopLeft(MakeRect("Subtitulo", rt), 72f, 122f, 900f, 36f);
+            MakeText(subRt, "Rat City / Bio-jaula", BodyFont, 26f, _theme.menuItem, TextAlignmentOptions.MidlineLeft);
+            var hintRt = Anchor(MakeRect("Indicacion", rt), new Vector2(0f, 0f), new Vector2(0f, 0f), new Vector2(72f, 28f), new Vector2(900f, 36f));
+            MakeText(hintRt, "Pasa el mouse por las zonas y haz clic en ellas.", BodyFont, 22f, _theme.menuItem, TextAlignmentOptions.MidlineLeft);
+            return section;
+        }
+
+        // ==================================================================
+        // Sección Personajes: carrusel (frames "Desktop - 1/8/9/10")
+        // ==================================================================
+        static Section BuildCharactersSection(RectTransform content)
+        {
+            var roster = LoadOrCreate<CharacterRoster>(RosterPath);
+            // Imágenes recortadas de Imagenes/Personajes.png
+            var files = new Dictionary<string, string>
+            {
+                { "Rata Blanca", "RataBlanca" }, { "Antonella", "Antonella" },
+                { "El Gordo John", "GordoJohn" }, { "Madame White", "MadameWhite" },
+            };
+            bool changed = false;
+            foreach (var c in roster.characters)
+            {
+                if (c.portrait != null || !files.TryGetValue(c.name, out var file)) continue;
+                c.portrait = AssetDatabase.LoadAssetAtPath<Sprite>(CharactersFolder + "/" + file + ".png");
+                changed |= c.portrait != null;
+            }
+            if (changed) { EditorUtility.SetDirty(roster); AssetDatabase.SaveAssets(); }
+
+            var rt = Stretch(MakeRect("Seccion" + SectionId.Personajes, content));
+            MakeGroup(rt.gameObject);
+            var section = rt.gameObject.AddComponent<CharactersSection>();
+            section.id = SectionId.Personajes;
+            section.roster = roster;
+
+            // Composición del frame de Figma (1440×1024), escalada para caber.
+            var stage = Stretch(MakeRect("Escenario", rt));
+            var comp = Center(MakeRect("Composicion", stage), 0f, 0f, RefWidth, RefHeight);
+            comp.gameObject.AddComponent<FitToParent>().designSize = new Vector2(RefWidth, RefHeight);
+
+            // Base (elipse 400×88 en x 868, y 811)
+            var pedestal = TopLeft(MakeRect("Base", comp), 868f, 811f, 400f, 88f);
+            var ped = pedestal.gameObject.AddComponent<ShapeGraphic>();
+            ped.Form = ShapeGraphic.Shape.Elipse;
+            ped.FillColor = _theme.panelGray;
+            ped.BorderWidth = 0f;
+            ped.raycastTarget = false;
+
+            // Personaje: se para sobre el centro de la base
+            var holder = Anchor(MakeRect("Personaje", comp), new Vector2(0f, 1f), new Vector2(0.5f, 0f),
+                new Vector2(1068f, -862f), new Vector2(10f, 10f));
+            var portraitGroup = MakeGroup(holder.gameObject);
+            portraitGroup.blocksRaycasts = false;
+            var img = Anchor(MakeRect("Imagen", holder), new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), Vector2.zero, new Vector2(300f, 450f));
+            var portrait = MakeImage(img, Color.white, roster.characters.Count > 0 ? roster.characters[0].portrait : null);
+            portrait.preserveAspect = true;
+
+            // Nombre (Inter 32, #282828) y descripción (Akshar 24, negro, centrada)
+            var texts = Stretch(MakeRect("Textos", comp));
+            var textGroup = MakeGroup(texts.gameObject);
+            textGroup.blocksRaycasts = false;
+            var nameRt = Anchor(MakeRect("Nombre", texts), new Vector2(0f, 1f), new Vector2(0.5f, 0.5f), new Vector2(1068f, -276.5f), new Vector2(600f, 44f));
+            var nameText = MakeText(nameRt, "Rata Blanca", BodyFont, 32f, _theme.darkText, TextAlignmentOptions.Center);
+            var descRt = Anchor(MakeRect("Descripcion", texts), new Vector2(0f, 1f), new Vector2(0.5f, 0.5f), new Vector2(429f, -512f), new Vector2(714f, 380f));
+            var descText = MakeText(descRt, "", _theme.chartFont, 24f, Color.black, TextAlignmentOptions.Center, true);
+            descText.enableAutoSizing = true;
+            descText.fontSizeMin = 16f;
+            descText.fontSizeMax = 24f;
+
+            section.portraitHolder = holder;
+            section.portrait = portrait;
+            section.portraitGroup = portraitGroup;
+            section.nameText = nameText;
+            section.descriptionText = descText;
+            section.textGroup = textGroup;
+            section.previousButton = CarouselButton(comp, "BotonAnterior", 749f, "<");
+            section.nextButton = CarouselButton(comp, "BotonSiguiente", 1307f, ">");
+            return section;
+        }
+
+        static Button CarouselButton(RectTransform comp, string name, float x, string glyph)
+        {
+            // Figma: cuadro de 80×80, #D9D9D9, con "<" en Inter 48 (#282828), y = 804
+            var rt = TopLeft(MakeRect(name, comp), x, 804f, 80f, 80f);
+            var img = MakeImage(rt, _theme.panelGray, null, true);
+            var button = rt.gameObject.AddComponent<Button>();
+            button.targetGraphic = img;
+            var colors = button.colors;
+            colors.highlightedColor = new Color(0.9f, 0.9f, 0.9f, 1f);
+            colors.pressedColor = new Color(0.78f, 0.78f, 0.78f, 1f);
+            colors.selectedColor = Color.white;
+            button.colors = colors;
+            var nav = button.navigation; nav.mode = Navigation.Mode.None; button.navigation = nav;
+            MakeText(Stretch(MakeRect("Simbolo", rt), 0f, 0f, 0f, 4f), glyph, BodyFont, 48f, _theme.darkText, TextAlignmentOptions.Center);
+            rt.gameObject.AddComponent<UISound>();
+            return button;
+        }
+
+        static T LoadOrCreate<T>(string path) where T : ScriptableObject
+        {
+            var asset = AssetDatabase.LoadAssetAtPath<T>(path);
+            if (asset != null) return asset;
+            asset = ScriptableObject.CreateInstance<T>();
+            AssetDatabase.CreateAsset(asset, path);
+            AssetDatabase.SaveAssets();
+            return asset;
         }
 
         // ==================================================================
